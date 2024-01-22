@@ -30,45 +30,49 @@ import java.util.Arrays;
 import static com.clayplug.activities.skilling.survival.fishing.tasks.actions.Fish.atLocation;
 import static com.clayplug.activities.skilling.survival.fishing.tasks.actions.Fish.goFish;
 
-@ScriptManifest(name = "Shrimp To Salmon F2P", author = "Clayplug", version = 0.2,
-        info = "Progressively trains F2P fishing to salmon. Banks/drops as needed.", logo = "https://i.imgur.com/Dzhga1w.jpg")
+@ScriptManifest(name = "Shrimp To Salmon F2P", author = "Clayplug", version = 0.2, info = "Progressively trains F2P fishing to salmon. Banks/drops as needed.", logo = "https://i.imgur.com/Dzhga1w.jpg")
 public class ShrimpToSalmon extends Script {
 
-    private final MouseTrail trail = new MouseTrail(213,163,114, 2001);
+    private final MouseTrail trail = new MouseTrail(213, 163, 114, 2001);
     private final MouseCursor cursor = new MouseCursor(69, 5, this);
 
     @Override
     public void onStart() throws InterruptedException {
         log("Fisher started");
 
+        int fishingLevel = skills.getStatic(Skill.FISHING);
+        determineFishingStrategy(fishingLevel);
 
-        if (skills.getStatic(Skill.FISHING) < 15) {
+        initializeGUI();
+    }
+
+    private void determineFishingStrategy(int fishingLevel) {
+        if (fishingLevel < 15) {
             goFish(Species.SHRIMP);
             atLocation("LUMBRIDGE_SWAMP");
-        } else if (skills.getStatic(Skill.FISHING) >= 15 && skills.getStatic(Skill.FISHING) < 20){
+        } else if (fishingLevel < 20) {
             goFish(Species.ANCHOVIES);
             atLocation("LUMBRIDGE_SWAMP");
-        } else if (skills.getStatic(Skill.FISHING) >= 20 && skills.getStatic(Skill.FISHING) < 30) {
+        } else if (fishingLevel < 30) {
             goFish(Species.TROUT);
             atLocation("LUMBRIDGE_RIVER");
-        } else if (skills.getStatic(Skill.FISHING) >= 30) {
+        } else {
             goFish(Species.SALMON);
             atLocation("BARBARIAN_VILLAGE");
         }
-
-        JInternalFrame gui = new ShrimpToSalmonGUI(this);
-
-        for (Frame frame: Frame.getFrames()) {
-            if (frame.getTitle().startsWith("OSBot")) {
-                frame.add(gui);
-                gui.setVisible(true);
-                gui.pack();
-
-                break;
-            }
-        }
     }
 
+    private void initializeGUI() {
+        JInternalFrame gui = new ShrimpToSalmonGUI(this);
+        Arrays.stream(Frame.getFrames())
+                .filter(frame -> frame.getTitle().startsWith("OSBot"))
+                .findFirst()
+                .ifPresent(frame -> {
+                    frame.add(gui);
+                    gui.setVisible(true);
+                    gui.pack();
+                });
+    }
 
     @Override
     public void onPaint(Graphics2D g) {
@@ -77,12 +81,11 @@ public class ShrimpToSalmon extends Script {
         cursor.paint(g);
         ShrimpToSalmonGUI.update(this);
     }
+
     @Override
     public int onLoop() throws InterruptedException {
-
         try {
             Task.STATUS test =
-
                     new Selector(this,
                             new IsMoving(this),
                             new Selector(this,
