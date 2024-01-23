@@ -47,13 +47,13 @@ public class ShrimpToSalmon extends Script {
     }
 
     private void determineFishingStrategy(int fishingLevel) {
-        if (fishingLevel < 15) {
+        if (skills.getStatic(Skill.FISHING) >= 15 && skills.getStatic(Skill.FISHING) < 20) {
             goFish(Species.SHRIMP);
             atLocation("LUMBRIDGE_SWAMP");
-        } else if (fishingLevel < 20) {
+        } else if (skills.getStatic(Skill.FISHING) >= 20 && skills.getStatic(Skill.FISHING) < 30) {
             goFish(Species.ANCHOVIES);
             atLocation("LUMBRIDGE_SWAMP");
-        } else if (fishingLevel < 30) {
+        } else if (skills.getStatic(Skill.FISHING) >= 30) {
             goFish(Species.TROUT);
             atLocation("LUMBRIDGE_RIVER");
         } else {
@@ -64,14 +64,15 @@ public class ShrimpToSalmon extends Script {
 
     private void initializeGUI() {
         JInternalFrame gui = new ShrimpToSalmonGUI(this);
-        Arrays.stream(Frame.getFrames())
-                .filter(frame -> frame.getTitle().startsWith("OSBot"))
-                .findFirst()
-                .ifPresent(frame -> {
-                    frame.add(gui);
-                    gui.setVisible(true);
-                    gui.pack();
-                });
+        for (Frame frame: Frame.getFrames()) {
+            if (frame.getTitle().startsWith("OSBot")) {
+                frame.add(gui);
+                gui.setVisible(true);
+                gui.pack();
+
+                break;
+            }
+        }
     }
 
     @Override
