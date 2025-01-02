@@ -19,8 +19,8 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
 
-      - name: Build and publish
-        run: ./gradlew publish
+      - name: Deploy to GitHub
+        run: gradle publish
         env:
           USERNAME: ${{ secrets.USERNAME }}
           TOKEN: ${{ secrets.TOKEN }}
