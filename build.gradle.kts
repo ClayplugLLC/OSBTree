@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.clayplug"
-version = "0.0.6"
+version = "0.0.7"
 
 publishing {
     repositories {
@@ -20,7 +20,7 @@ publishing {
     publications {
         register<MavenPublication>("gpr") {
             from(components["java"])
-            artifactId = "OSBTree"
+            artifactId = "osbtree"
         }
     }
 }
