@@ -3,7 +3,7 @@ package com.clayplug.utilities.btree;
 import org.osbot.rs07.script.MethodProvider;
 
 /**
- * Created by Clayplug in 2022
+ * Created by Clayplug in 2022. Updated 2024
  * This interface and its derived classes were heavily influenced by
  * Ian Millington's "AI for Games", Third Edition
  */
