@@ -2,7 +2,6 @@
   <artifact type="jar" build-on-make="true" name="ShrimpToSalmon:jar">
     <output-path>$USER_HOME$/OSBot/Scripts</output-path>
     <root id="archive" name="ShrimpToSalmon.jar">
-      <element id="module-output" name="ShrimpToSalmon" />
       <element id="module-output" name="OSBTree" />
     </root>
   </artifact>
