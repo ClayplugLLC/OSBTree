@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.clayplug"
-version = "0.0.3"
+version = "0.0.4"
 
 publishing {
     repositories {
