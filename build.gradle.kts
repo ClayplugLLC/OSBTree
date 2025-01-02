@@ -12,8 +12,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/ClayplugLLC/OSBTree")
             credentials {
-                username = System.getenv("USERNAME")
-                password = System.getenv("TOKEN")
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }

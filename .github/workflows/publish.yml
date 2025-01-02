@@ -22,5 +22,5 @@ jobs:
       - name: Deploy to GitHub
         run: gradle publish
         env:
-          USERNAME: ${{ secrets.USERNAME }}
-          TOKEN: ${{ secrets.TOKEN }}
+          USERNAME: ${{ secrets.GITHUB_ACTOR }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
